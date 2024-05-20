@@ -1,5 +1,10 @@
 import requests
+import os
 from colorama import Fore, Style
+import logging
+
+# Configure logging
+logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 
 def check_emails(emails, api_token):
     disposable_emails = []
@@ -7,7 +12,6 @@ def check_emails(emails, api_token):
     
     url = 'https://api.api-aries.online/v1/checkers/proxy/email/'
     headers = {
-        'Type': '1',  # learn more: https://support.api-aries.online/hc/articles/1/3/3/email-checker
         'APITOKEN': api_token  
     }
     
@@ -27,9 +31,9 @@ def check_emails(emails, api_token):
                 else:
                     non_disposable_emails.append(email)
             else:
-                print(f"The disposable status of email '{email}' is unknown.")
+                logging.warning(f"The disposable status of email '{email}' is unknown.")
         except Exception as e:
-            print(f"Error processing email {email}: {e}.")
+            logging.error(f"Error processing email {email}: {e}.")
         
         print(f"Checked {idx}/{len(emails)} emails.", end='\r')
     
@@ -51,18 +55,16 @@ input_filename = 'emails.txt'
 
 api_token = 'API-TOKEN'  # Replace this with your API token 
 
-# learn more: https://support.api-aries.online/hc/articles/1/3/3/email-checker
-
 email_list = read_emails_from_file(input_filename)
 
 checked_count, disposable_emails, non_disposable_emails = check_emails(email_list, api_token)
 
 disposable_filename = 'disposable_emails.txt'
 write_emails_to_file(disposable_emails, disposable_filename)
-print(f"{Fore.RED}Disposable{Style.RESET_ALL} emails written to '{disposable_filename}'.")
+logging.info(f"{Fore.RED}Disposable{Style.RESET_ALL} emails written to '{disposable_filename}'.")
 
 non_disposable_filename = 'non_disposable_emails.txt'
 write_emails_to_file(non_disposable_emails, non_disposable_filename)
-print(f"{Fore.GREEN}Non-disposable{Style.RESET_ALL} emails written to '{non_disposable_filename}'.")
+logging.info(f"{Fore.GREEN}Non-disposable{Style.RESET_ALL} emails written to '{non_disposable_filename}'.")
 
-print(f"Total emails checked: {checked_count}")
+logging.info(f"Total emails checked: {checked_count}")
