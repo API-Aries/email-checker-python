@@ -10,7 +10,7 @@ def check_emails(emails, api_token):
     disposable_emails = []
     non_disposable_emails = []
     
-    url = 'https://api.api-aries.online/v1/checkers/proxy/email/'
+    url = 'https://api.api-aries.com/v1/checkers/proxy/email/'
     headers = {
         'APITOKEN': api_token  
     }
