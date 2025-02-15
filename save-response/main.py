@@ -14,7 +14,7 @@ def check_emails(emails, api_token):
     non_disposable_emails = []
     
     # API endpoint URL
-    url = 'https://api.api-aries.online/v1/checkers/proxy/email/'
+    url = 'https://api.api-aries.com/v1/checkers/proxy/email/'
     
     # Headers required for the API request
     headers = {
@@ -61,7 +61,7 @@ def read_emails_from_file(filename):
 # Example filename containing emails
 filename = 'emails.txt'
 
-api_token = 'API-TOKEN' # Replace this with your API token
+api_token = 'API-TOKEN' # Replace this with your API token - https://panel.api-aries.com
 
 email_list = read_emails_from_file(filename)
 
